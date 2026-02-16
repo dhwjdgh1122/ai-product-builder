@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const lottoNumbersContainer = document.querySelector('.lotto-numbers');
     const numberSpans = lottoNumbersContainer.querySelectorAll('.number');
     const historyList = document.getElementById('history-list');
+    const themeToggle = document.getElementById('checkbox');
 
     // Function to generate and display numbers
     const generateNumbers = () => {
@@ -21,14 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const sortedNumbers = Array.from(numbers).sort((a, b) => a - b);
 
         // Trigger reflow to restart animation
-        // offsetHeight is a trick to do this
         void lottoNumbersContainer.offsetHeight; 
 
         sortedNumbers.forEach((number, index) => {
             const span = numberSpans[index];
-            span.style.animation = ''; // Reset animation property
+            span.style.animation = '';
             span.textContent = number;
-            // Add animation back
             span.style.animation = `fadeIn 0.5s forwards ${index * 0.1 + 0.1}s`;
         });
 
@@ -41,6 +40,24 @@ document.addEventListener('DOMContentLoaded', () => {
         newHistoryItem.textContent = numbers.join(', ');
         historyList.prepend(newHistoryItem);
     };
+
+    // --- Theme Switch Logic ---
+    const setAppTheme = (theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        themeToggle.checked = theme === 'dark';
+    };
+
+    themeToggle.addEventListener('change', () => {
+        const newTheme = themeToggle.checked ? 'dark' : 'light';
+        setAppTheme(newTheme);
+    });
+
+    const currentTheme = localStorage.getItem('theme') || 
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    
+    setAppTheme(currentTheme);
+    // --- End of Theme Switch Logic ---
 
     // Event listener for the button click
     generateBtn.addEventListener('click', generateNumbers);

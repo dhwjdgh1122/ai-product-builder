@@ -1,36 +1,32 @@
-# Blueprint: Lotto Number Generator
 
-## 1. Project Overview
+# 프로젝트 개요
 
-This is a simple, framework-less web application that generates random lottery numbers for users. It provides a clean, modern, and visually appealing interface for generating and viewing lottery number history. The application is built using modern HTML, CSS, and JavaScript, following Baseline web standards.
+이 프로젝트는 사용자가 버튼 하나로 쉽게 로또 번호를 생성, 확인하고 기록을 관리할 수 있는 웹 애플리케이션입니다. 깔끔하고 현대적인 디자인을 적용하여 사용자 경험을 향상시키는 데 중점을 두었습니다.
 
-## 2. Style, Design, and Features (V1)
+# 디자인 및 기능
 
-### **Visual Design**
-*   **Aesthetics:** A unique user experience with modern components, a visually balanced layout with clean spacing, and polished styles.
-*   **Color Palette:** A vibrant and energetic look and feel with a wide range of color concentrations and hues. The primary colors are a deep navy blue for the background and a bright gold for accents and interactive elements.
-*   **Typography:** Expressive and relevant typography using the "Poppins" font from Google Fonts. Font sizes are stressed to create a clear hierarchy (hero text, headlines, etc.).
-*   **Texture & Effects:**
-    *   A subtle noise texture is applied to the main background for a premium, tactile feel.
-    *   Multi-layered drop shadows create a strong sense of depth, making cards and interactive elements appear "lifted".
-    *   Interactive elements have a "glow" effect on hover.
-*   **Iconography:** A lottery ball icon is used as the favicon to enhance brand identity.
-*   **Layout:** The application is fully responsive and works perfectly on mobile and web, using modern CSS like Flexbox for layout.
+*   **메인 화면:**
+    *   **헤더:** "로또 번호 생성기"라는 명확한 제목을 표시합니다.
+    *   **번호 디스플레이:** 생성된 6개의 로또 번호가 세련된 원형 디자인 안에 표시됩니다. 각 번호는 부드러운 등장 애니메이션 효과를 가집니다.
+    *   **생성 버튼:** "번호 생성" 텍스트가 있는 버튼으로, 클릭 시 새로운 번호를 생성합니다. 버튼 위로 마우스를 올리면 그림자 및 미묘한 색상 변화 효과가 나타나 상호작용성을 높입니다.
+    *   **히스토리:** 생성된 번호 기록이 최신순으로 정렬되어 목록 형태로 표시됩니다.
+*   **전체 디자인:**
+    *   **색상 팔레트:** 배경은 부드러운 질감의 연한 회색, 컨텐츠 영역은 흰색, 주요 버튼 및 강조 색상은 활기찬 파란색 계열을 사용하여 시각적 편안함과 주목도를 동시에 만족시킵니다.
+    *   **타이포그래피:** 가독성이 높은 "Poppins" 폰트를 사용하여 전체적으로 깔끔하고 현대적인 느낌을 줍니다.
+    *   **그림자 및 효과:** 컨테이너와 버튼에 깊이감을 주는 다중 레이어 그림자를 적용하여 입체적인 느낌을 살립니다.
 
-### **Features**
-*   **Number Generation:** Users can click a button to generate 6 unique random numbers between 1 and 45.
-*   **Visual Feedback:** The generated numbers are displayed in styled "lotto balls" with a smooth appearance animation.
-*   **History Tracking:** A history of all generated number sets is displayed in a list for users to review.
+# 현재 구현 계획: 다크/라이트 모드 전환
 
-## 3. Current Task: Initial Design and Server Restart
+1.  **HTML 수정:**
+    *   `index.html` 파일의 오른쪽 상단에 다크/라이트 모드를 전환할 수 있는 토글 스위치를 추가합니다.
+2.  **CSS 수정:**
+    *   `style.css` 파일에 라이트 모드와 다크 모드에 대한 색상 변수를 각각 정의합니다. (`:root` 및 `[data-theme='dark']`)
+    *   새로 추가된 토글 스위치의 스타일을 정의합니다.
+3.  **JavaScript 수정:**
+    *   `main.js` 파일에 토글 스위치와 관련된 로직을 추가합니다.
+    *   페이지 로드 시 사용자의 시스템 환경(선호 색상)을 확인하여 자동으로 테마를 적용합니다.
+    *   사용자가 토글을 클릭하면 `<html>` 태그의 `data-theme` 속성을 변경하여 테마를 전환합니다.
+    *   사용자의 테마 선택을 `localStorage`에 저장하여 다음 방문 시에도 선택한 테마가 유지되도록 합니다.
+4.  **배포:**
+    *   모든 코드 변경사항을 `git`으로 커밋하고 원격 저장소에 푸시하여 최종 배포를 완료합니다.
 
-**Plan:**
-1.  **Restart Server:** Execute `npx serve` to make the application available at `http://localhost:3000`.
-2.  **Enhance Visual Design:**
-    *   Apply a new color palette, including a navy background and gold accents.
-    *   Integrate the "Poppins" Google Font for improved typography.
-    *   Add a subtle background texture using a noise image.
-    *   Add `box-shadow` to create depth for the main container and buttons.
-    *   Implement a "glow" effect on button hover.
-    *   Create a smooth fade-in animation for the generated numbers.
-3.  **Add Favicon:** Add a `favicon.ico` to the project and link it in the `index.html`.
