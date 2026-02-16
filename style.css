@@ -33,7 +33,7 @@ body {
     align-items: flex-start; /* Align to the top */
     min-height: 100vh;
     margin: 0;
-    padding-top: 2rem; /* Add some padding at the top */
+    padding-top: 2rem;
     transition: background-color 0.3s, color 0.3s;
     position: relative;
 }
@@ -80,7 +80,7 @@ input:checked + .slider { background-color: var(--primary-color); }
 input:checked + .slider:before { transform: translateX(25px); }
 
 /* Card Styles */
-.lotto-card, .history-card, .contact-card {
+.lotto-card, .history-card, .contact-card, .comments-card {
     background-color: var(--card-background-color);
     border-radius: 16px;
     padding: 2rem;
@@ -116,7 +116,9 @@ input:checked + .slider:before { transform: translateX(25px); }
 #history-list li:last-child { border-bottom: none; }
 
 /* Contact Form Styles */
-.contact-card h2 { margin-top: 0; margin-bottom: 1rem; font-size: 1.5rem; }
+.contact-card h2, .comments-card h2 {
+     margin-top: 0; margin-bottom: 1rem; font-size: 1.5rem; 
+}
 .form-group { margin-bottom: 1rem; }
 .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
 .form-group input, .form-group textarea {
@@ -156,4 +158,9 @@ input:checked + .slider:before { transform: translateX(25px); }
 }
 #form-status.success { color: var(--success-color); }
 #form-status.error { color: var(--error-color); }
+
+/* Comments Card specific */
+#disqus_thread {
+    margin-top: 1rem;
+}
 
