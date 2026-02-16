@@ -1,24 +1,46 @@
-const generateBtn = document.getElementById('generate-btn');
-const numberSpans = document.querySelectorAll('.number');
-const historyList = document.getElementById('history-list');
+document.addEventListener('DOMContentLoaded', () => {
+    const generateBtn = document.getElementById('generate-btn');
+    const lottoNumbersContainer = document.querySelector('.lotto-numbers');
+    const numberSpans = lottoNumbersContainer.querySelectorAll('.number');
+    const historyList = document.getElementById('history-list');
 
-const generateLottoNumbers = () => {
-    const lottoNumbers = [];
-    while (lottoNumbers.length < 6) {
-        const randomNumber = Math.floor(Math.random() * 45) + 1;
-        if (!lottoNumbers.includes(randomNumber)) {
-            lottoNumbers.push(randomNumber);
+    const generateNumbers = () => {
+        // Reset animation
+        numberSpans.forEach(span => {
+            span.style.animation = 'none';
+            span.textContent = ''; // Clear previous numbers
+        });
+
+        const numbers = new Set();
+        while (numbers.size < 6) {
+            numbers.add(Math.floor(Math.random() * 45) + 1);
         }
-    }
-    lottoNumbers.sort((a, b) => a - b);
 
-    numberSpans.forEach((span, index) => {
-        span.textContent = lottoNumbers[index];
-    });
+        const sortedNumbers = Array.from(numbers).sort((a, b) => a - b);
 
-    const newHistoryItem = document.createElement('li');
-    newHistoryItem.textContent = lottoNumbers.join(', ');
-    historyList.appendChild(newHistoryItem);
-};
+        // Trigger reflow to restart animation
+        //offsetHeight is a trick to do this
+        void lottoNumbersContainer.offsetHeight; 
 
-generateBtn.addEventListener('click', generateLottoNumbers);
+        sortedNumbers.forEach((number, index) => {
+            const span = numberSpans[index];
+            span.style.animation = ''; // Reset animation property
+            span.textContent = number;
+            // Add animation back
+            span.style.animation = `fadeIn 0.5s forwards ${index * 0.1 + 0.1}s`;
+        });
+
+        updateHistory(sortedNumbers);
+    };
+
+    const updateHistory = (numbers) => {
+        const newHistoryItem = document.createElement('li');
+        newHistoryItem.textContent = numbers.join(', ');
+        historyList.prepend(newHistoryItem);
+    };
+
+    generateBtn.addEventListener('click', generateNumbers);
+
+    // Generate initial numbers on load
+    generateNumbers();
+});
