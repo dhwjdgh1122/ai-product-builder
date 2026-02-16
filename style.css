@@ -5,7 +5,11 @@
     --primary-color: #007bff;
     --primary-hover-color: #0056b3;
     --number-bg-color: #e9ecef;
+    --input-border-color: #ced4da;
+    --input-focus-border-color: #80bdff;
     --noise-opacity: 0.05;
+    --success-color: #28a745;
+    --error-color: #dc3545;
 }
 
 [data-theme="dark"] {
@@ -15,6 +19,8 @@
     --primary-color: #4dabf7;
     --primary-hover-color: #1c7ed6;
     --number-bg-color: #444444;
+    --input-border-color: #555;
+    --input-focus-border-color: #4dabf7;
     --noise-opacity: 0.02;
 }
 
@@ -24,9 +30,10 @@ body {
     color: var(--text-color);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Align to the top */
     min-height: 100vh;
     margin: 0;
+    padding-top: 2rem; /* Add some padding at the top */
     transition: background-color 0.3s, color 0.3s;
     position: relative;
 }
@@ -38,7 +45,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('data:image/svg+xml,...'); /* Add a subtle noise texture */
+    background-image: url('data:image/svg+xml,...');
     opacity: var(--noise-opacity);
     pointer-events: none;
     z-index: -1;
@@ -64,58 +71,16 @@ header h1 {
 }
 
 /* Theme Switch Styles */
-.theme-switch-wrapper {
-    display: flex;
-    align-items: center;
-}
-
-.theme-switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 25px;
-}
-
-.theme-switch input { 
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 25px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 19px;
-    width: 19px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-}
-
-input:checked + .slider {
-    background-color: var(--primary-color);
-}
-
-input:checked + .slider:before {
-    transform: translateX(25px);
-}
+.theme-switch-wrapper { display: flex; align-items: center; }
+.theme-switch { position: relative; display: inline-block; width: 50px; height: 25px; }
+.theme-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 25px; }
+.slider:before { position: absolute; content: ""; height: 19px; width: 19px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider { background-color: var(--primary-color); }
+input:checked + .slider:before { transform: translateX(25px); }
 
 /* Card Styles */
-.lotto-card, .history-card {
+.lotto-card, .history-card, .contact-card {
     background-color: var(--card-background-color);
     border-radius: 16px;
     padding: 2rem;
@@ -124,36 +89,10 @@ input:checked + .slider:before {
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.lotto-numbers {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 2rem;
-}
-
-.number {
-    background-color: var(--number-bg-color);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--text-color);
-    transition: background-color 0.3s, color 0.3s;
-    animation: fadeIn 0.5s forwards;
-    opacity: 0;
-}
-
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-    }
-}
+/* Lotto Card specific */
+.lotto-numbers { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 2rem; }
+.number { background-color: var(--number-bg-color); border-radius: 50%; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 600; color: var(--text-color); transition: all 0.3s; animation: fadeIn 0.5s forwards; opacity: 0; }
+@keyframes fadeIn { to { opacity: 1; } }
 
 #generate-btn {
     background-color: var(--primary-color);
@@ -168,33 +107,53 @@ input:checked + .slider:before {
     transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
     box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
 }
+#generate-btn:hover { background-color: var(--primary-hover-color); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3); }
 
-#generate-btn:hover {
-    background-color: var(--primary-hover-color);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
-}
+/* History Card specific */
+.history-card h2 { margin-top: 0; margin-bottom: 1rem; font-size: 1.5rem; }
+#history-list { list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; }
+#history-list li { padding: 0.75rem 0; border-bottom: 1px solid var(--number-bg-color); font-size: 1rem; }
+#history-list li:last-child { border-bottom: none; }
 
-.history-card h2 {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-}
-
-#history-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-height: 150px;
-    overflow-y: auto;
-}
-
-#history-list li {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--number-bg-color);
+/* Contact Form Styles */
+.contact-card h2 { margin-top: 0; margin-bottom: 1rem; font-size: 1.5rem; }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: inherit;
     font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--input-focus-border-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+.contact-card button {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.contact-card button:hover { background-color: var(--primary-hover-color); }
 
-#history-list li:last-child {
-    border-bottom: none;
+#form-status {
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: 600;
 }
+#form-status.success { color: var(--success-color); }
+#form-status.error { color: var(--error-color); }
+
